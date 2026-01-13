@@ -34,10 +34,3 @@ The main goal of this project is to help students prepare for competitive and ac
 * Practice platform for quizzes and self-assessment
 * Academic mini-project for web development
 
-## 📄 License
-
-This project is open-source and available for learning and educational purposes.
-
----
-
-⭐ If you find this project useful, consider giving it a star!
