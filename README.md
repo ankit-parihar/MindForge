@@ -1,6 +1,6 @@
 **Exam Preparation Quiz Platform**
 
-A web-based exam preparation platform built using **HTML, CSS, and JavaScript**. The application focuses on interactive quizzes and detailed performance analysis to help students evaluate their preparation level and improve exam readiness.
+A web-based exam preparation platform built using HTML, CSS, and JavaScript, offering interactive quizzes and detailed performance analysis to help students assess readiness and improve results through efficient virtual practice tools like Text Editors, Drawing Canvas and many more.
 
 **Project link-** https://mindforge.xo.je
 
