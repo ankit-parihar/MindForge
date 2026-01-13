@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExamPrepHub - Legal Documents</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS STYLES --- */
+        :root {
+            --primary-color: #4CAF50; /* A fresh green */
+            --primary-light: #81C784;
+            --secondary-color: #f0f4f8; /* Light gray-blue */
+            --text-color: #333;
+            --heading-color: #2c3e50; /* Darker blue for headings */
+            --border-color: #e0e6ed;
+            --background-color: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --max-width: 960px;
+            --border-radius: 10px;
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Open Sans', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            width: 95%;
+            margin: 40px auto;
+            padding: 40px;
+            background: var(--background-color);
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border-radius: var(--border-radius);
+            position: relative;
+            overflow: hidden; /* For smooth tab content transitions */
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        header h1 {
+            font-family: var(--font-heading);
+            color: var(--heading-color);
+            font-size: 2.8em;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 1.1em;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navigation/Tabs Styling */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            background-color: #e9ecef;
+            border-radius: var(--border-radius);
+            padding: 5px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-button {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-family: var(--font-heading);
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--heading-color);
+            border-radius: calc(var(--border-radius) - 3px);
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: inherit;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-out;
+            z-index: -1;
+        }
+
+        .tab-button:hover:not(.active)::before {
+            transform: scaleX(0.05); /* Slight hover effect */
+        }
+        
+        .tab-button:hover:not(.active) {
+            color: var(--primary-color); /* Keep text color for hover */
+        }
+
+        .tab-button.active {
+            color: var(--background-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .tab-button.active::before {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+
+        /* Content Styling */
+        .content-section {
+            display: none; /* Hidden by default */
+            padding-top: 20px;
+            animation: fadeIn 0.5s ease-out forwards; /* Fade in animation */
+            transition: opacity 0.5s ease-out;
+            min-height: 400px; /* Prevent layout shift when switching */
+        }
+
+        .content-section.active {
+            display: block; /* Shown when active */
+            opacity: 1;
+        }
+
+        /* Fade out for content when inactive */
+        .content-section:not(.active) {
+            opacity: 0;
+            pointer-events: none; /* Make it unclickable when fading out */
+            position: absolute; /* To allow fading out while new content fades in */
+            width: calc(var(--max-width) - 80px); /* Match container width - padding */
+            top: 290px; /* Position it correctly */
+            left: 40px; /* Position it correctly */
+        }
+
+
+        h2 {
+            font-family: var(--font-heading);
+            color: var(--primary-color);
+            margin-top: 35px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 10px;
+            font-size: 2.2em;
+            letter-spacing: -0.5px;
+        }
+
+        h3 {
+            font-family: var(--font-heading);
+            color: var(--heading-color);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        ul {
+            list-style: none; /* Remove default list style */
+            padding: 0;
+            margin-left: 0;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 25px; /* Space for custom bullet */
+            margin-bottom: 10px;
+        }
+
+        ul li::before {
+            content: '•'; /* Custom bullet point */
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+            font-size: 1.2em;
+            line-height: 1.7;
+        }
+
+        p, li {
+            text-align: justify;
+            font-size: 1.05em;
+            color: #444;
+        }
+
+        strong {
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9em;
+            color: #777;
+            width: 100%;
+            max-width: var(--max-width);
+            margin-bottom: 20px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px 15px;
+                padding: 25px;
+                width: auto;
+            }
+            header h1 {
+                font-size: 2em;
+            }
+            .tab-button {
+                padding: 12px 15px;
+                font-size: 1em;
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            h3 {
+                font-size: 1.3em;
+            }
+            .content-section:not(.active) {
+                width: calc(100% - 50px); /* Adjust for smaller padding */
+                left: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 15px 10px;
+                padding: 15px;
+            }
+            header h1 {
+                font-size: 1.7em;
+            }
+            .tabs {
+                flex-direction: column; /* Stack tabs vertically */
+            }
+            .tab-button {
+                margin-bottom: 5px;
+            }
+            .content-section:not(.active) {
+                top: 310px; /* Adjust top positioning for stacked tabs */
+                width: calc(100% - 30px);
+                left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>ExamPrepHub Legal Center</h1>
+            <p>Your guide to using our service responsibly and understanding your rights. We prioritize transparency and clarity in all our policies.</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-button active" data-tab="privacy">
+                Privacy Policy
+            </button>
+            <button class="tab-button" data-tab="terms">
+                Terms of Service
+            </button>
+        </nav>
+
+        <section id="privacy" class="content-section active">
+            <h2>🔒 Privacy Policy for ExamPrepHub</h2>
+            <p><strong>Effective Date:</strong> November 29, 2025</p>
+
+            <p>At ExamPrepHub, we respect your privacy and are committed to protecting it through our compliance with this policy. This policy describes the types of information we may collect from you or that you may provide when you visit our website and our practices for collecting, using, maintaining, protecting, and disclosing that information.</p>
+
+            <h3>1. Information We Collect</h3>
+            <p>We collect several types of information from and about users of our Website, including:</p>
+            <ul>
+                <li><strong>Personal Identification Information:</strong> Your name, email address, academic affiliation (e.g., school/university), and payment details (which are processed securely by a reputable third-party vendor, not stored directly by us).</li>
+                <li><strong>Usage Data:</strong> Detailed information about how you interact with our service, such as practice test scores, time spent on specific lessons or topics, pages viewed, features accessed, and technical device information (e.g., IP address, operating system, browser type). This helps us understand how our service is used and where we can improve.</li>
+                <li><strong>Voluntary Information:</strong> Any feedback you provide, responses to surveys, and details shared during customer support inquiries. This helps us to serve you better and enhance our offerings.</li>
+            </ul>
+
+            <h3>2. How We Use Your Information</h3>
+            <p>The information we collect is crucial for providing a high-quality, personalized service. We use it for purposes including:</p>
+            <ul>
+                <li>To **provide, operate, and maintain** the ExamPrepHub service, ensuring all features function smoothly.</li>
+                <li>To **personalize your exam preparation experience**, for example, by suggesting tailored study paths, recommending specific topics for review based on your performance, and adapting content to your learning style.</li>
+                <li>To **process your transactions** securely, manage your subscription, and handle any billing inquiries.</li>
+                <li>To **communicate with you** regarding your account, important service updates, security alerts, and relevant marketing materials (you always have the option to opt-out of marketing communications).</li>
+                <li>To **monitor and analyze usage and trends** within our service, allowing us to continuously improve our content, features, and overall user experience.</li>
+                <li>To **detect, prevent, and address technical issues** or fraudulent activities.</li>
+            </ul>
+
+            <h3>3. Data Security</h3>
+            <p>We take the security of your personal information very seriously. We have implemented a variety of robust measures designed to protect your data from accidental loss and from unauthorized access, use, alteration, and disclosure. These measures include:</p>
+            <ul>
+                <li>**Encryption:** All sensitive data, especially payment transactions, are encrypted using industry-standard **SSL/TLS technology**.</li>
+                <li>**Third-Party Processors:** Payment details are handled exclusively by PCI-compliant third-party payment processors, meaning we do not store your credit card information directly on our servers.</li>
+                <li>**Access Controls:** Access to personal data by our staff is strictly limited and based on the principle of least privilege.</li>
+                <li>**Regular Audits:** We regularly review our data collection, storage, and processing practices, including physical security measures, to guard against unauthorized access to systems.</li>
+            </ul>
+
+            <h3>4. Data Retention</h3>
+            <p>We retain your personal information only for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law (such as for tax, accounting, or other legal requirements). When we no longer need your information, we will either delete or anonymize it.</p>
+
+            <h3>5. Your Data Protection Rights</h3>
+            <p>Depending on your location, you may have the following data protection rights:</p>
+            <ul>
+                <li>The right to **access, update, or delete** the personal information we hold about you.</li>
+                <li>The right to **object to our processing** of your personal information.</li>
+                <li>The right to **request that we restrict the processing** of your personal information.</li>
+                <li>The right to **data portability**, allowing you to obtain a copy of your personal information in a structured, machine-readable format.</li>
+                <li>The right to **withdraw consent** at any time where ExamPrepHub relied on your consent to process your personal information.</li>
+            </ul>
+            <p>To exercise any of these rights, please contact us at legal@examprephub.com.</p>
+
+            <h3>6. Changes to Our Privacy Policy</h3>
+            <p>We may update our Privacy Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will notify you of any significant changes by posting the new Privacy Policy on this page and updating the "Effective Date" at the top. You are advised to review this Privacy Policy periodically for any changes. Your continued use of the service after any such changes constitutes your acceptance of the new Privacy Policy.</p>
+        </section>
+
+        <section id="terms" class="content-section">
+            <h2>⚖️ Terms of Service (ToS) for ExamPrepHub</h2>
+            <p><strong>Effective Date:</strong> November 29, 2025</p>
+
+            <p>Welcome to ExamPrepHub! These Terms of Service ("Terms") govern your access to and use of the ExamPrepHub website, products, and services ("Service"). Please read them carefully. By accessing or using the Service, you agree to be bound by these Terms. If you disagree with any part of the terms, you must not access the Service.</p>
+
+            <h3>1. Acceptance of Terms</h3>
+            <p>By accessing or using the ExamPrepHub Service, you confirm that you have read, understood, and agree to be bound by these Terms, as well as our Privacy Policy. If you are using the Service on behalf of an organization, you are agreeing to these Terms for that organization and representing that you have the authority to bind that organization to these Terms. You represent that you are at least 13 years old. If you are under 18, you must have reviewed these Terms with a parent or legal guardian who agrees to be bound by them.</p>
+
+            <h3>2. Account Registration and Security</h3>
+            <ul>
+                <li>You must provide accurate, current, and complete registration information to create an account.</li>
+                <li>You are solely responsible for maintaining the confidentiality of your account password and for all activities that occur under your account.</li>
+                <li>You agree to notify ExamPrepHub immediately of any unauthorized use of your account or any other breach of security. ExamPrepHub cannot and will not be liable for any loss or damage arising from your failure to comply with this security obligation.</li>
+                <li>You may not use another user's account without permission.</li>
+            </ul>
+
+            <h3>3. Use License and Intellectual Property</h3>
+            <p>The Service, including all proprietary content, software, text, graphics, images, video, audio, and all intellectual property rights related thereto (including copyrights, patents, trademarks, and trade secrets), is the exclusive property of ExamPrepHub or its licensors.</p>
+            <ul>
+                <li><strong>License Grant:</strong> We grant you a limited, non-exclusive, non-transferable, revocable license to access and use the Service for your personal, non-commercial educational purposes, strictly in accordance with these Terms.</li>
+                <li><strong>Prohibitions:</strong> You may not copy, modify, distribute, sell, lease, reverse engineer, or create derivative works from any part of the Service's content without our express written permission. You may not use the Service for any illegal or unauthorized purpose, nor may you, in the use of the Service, violate any laws in your jurisdiction (including but not limited to copyright laws). Sharing your account credentials or allowing others to access your account is strictly prohibited.</li>
+            </ul>
+
+            <h3>4. Payment, Subscription, and Refunds</h3>
+            <p>Certain features or access to specific content within the Service may require a paid subscription or a one-time purchase. By opting for such features, you agree to the pricing and payment terms presented to you at the time of purchase.</p>
+            <ul>
+                <li>Subscription Renewals:** Subscriptions typically auto-renew at the end of each billing cycle unless you cancel them before the renewal date. It is your responsibility to manage your subscription settings.</li>
+                <li>**Refund Policy:** All sales are generally final. However, we may offer refunds at our sole discretion under specific circumstances (e.g., documented technical issues preventing service use, as detailed in a separate refund policy if applicable). Please contact customer support for any refund requests.</li>
+            </ul>
+
+            <h3>5. User Conduct</h3>
+            <p>You agree to use the Service only for lawful purposes and in a way that does not infringe the rights of, restrict, or inhibit anyone else's use and enjoyment of the Service. Prohibited behavior includes harassing or causing distress or inconvenience to any other user, transmitting obscene or offensive content, or disrupting the normal flow of dialogue within the Service.</p>
+
+            <h3>6. Termination</h3>
+            <p>We may terminate or suspend your access to the Service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms. Such termination may result in the forfeiture and destruction of all information associated with your account. Upon termination, your right to use the Service will immediately cease.</p>
+
+            <h3>7. Disclaimer of Warranties</h3>
+            <p>The Service is provided on an "AS IS" and "AS AVAILABLE" basis. ExamPrepHub makes no warranties, expressed or implied, regarding the accuracy, reliability, performance, or results of using the Service. To the fullest extent permissible pursuant to applicable law, ExamPrepHub disclaims all warranties, express or implied, including, but not limited to, implied warranties of merchantability, fitness for a particular purpose, and non-infringement. We do not guarantee that your use of the Service will result in a specific exam score or academic outcome.</p>
+
+            <h3>8. Limitation of Liability</h3>
+            <p>In no event shall ExamPrepHub, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from (i) your access to or use of or inability to access or use the Service; (ii) any conduct or content of any third party on the Service; (iii) any content obtained from the Service; and (iv) unauthorized access, use or alteration of your transmissions or content, whether based on warranty, contract, tort (including negligence) or any other legal theory, whether or not we have been informed of the possibility of such damage, and even if a remedy set forth herein is found to have failed of its essential purpose.</p>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 ExamPrepHub. All rights reserved. | For legal inquiries: <a href="mailto:legal@examprephub.com" style="color: var(--primary-color); text-decoration: none;">legal@examprephub.com</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('.tab-button');
+            const sections = document.querySelectorAll('.content-section');
+            const container = document.querySelector('.container');
+
+            function switchTab(tabId) {
+                // Determine current active section for height calculation
+                const currentActiveSection = document.querySelector('.content-section.active');
+                let currentHeight = currentActiveSection ? currentActiveSection.offsetHeight : 0;
+
+                // 1. Remove 'active' class from all buttons and sections
+                tabs.forEach(button => button.classList.remove('active'));
+                
+                // Set container height to current content height to prevent jump
+                if (currentHeight > 0) {
+                    container.style.height = `${currentHeight + 290}px`; // Header + nav + current content height
+                }
+
+
+                sections.forEach(section => {
+                    if (section.id !== tabId) {
+                        section.classList.remove('active');
+                    }
+                });
+
+                // 2. Add 'active' class to the clicked button
+                const activeButton = document.querySelector(`[data-tab="${tabId}"]`);
+                if (activeButton) {
+                    activeButton.classList.add('active');
+                }
+
+                // 3. Add 'active' class to the corresponding content section
+                const targetSection = document.getElementById(tabId);
+                if (targetSection) {
+                    // Temporarily display to calculate new height
+                    targetSection.style.display = 'block';
+                    targetSection.style.opacity = '0';
+                    targetSection.style.position = 'absolute'; // Position it for height calc
+
+                    const newHeight = targetSection.offsetHeight;
+                    
+                    targetSection.style.display = 'none'; // Hide again
+
+                    // Animate container height
+                    if (currentHeight > 0) {
+                        container.style.transition = 'height 0.5s ease-in-out';
+                        container.style.height = `${newHeight + 290}px`; // New content height
+                    } else {
+                         // First load, just set height
+                         container.style.height = `${newHeight + 290}px`;
+                    }
+                   
+                    // Once height transition starts, then show the new content
+                    setTimeout(() => {
+                        sections.forEach(section => section.style.display = 'none'); // Hide all first
+                        targetSection.classList.add('active'); // Add active, which triggers fadeIn CSS
+                        targetSection.style.opacity = '1';
+                        targetSection.style.position = 'static'; // Reset position
+                        targetSection.style.display = 'block'; // Make it block for flexbox
+                        
+                        // Clear height after animation if desired, or keep for stability
+                        container.style.height = 'auto'; 
+                        container.style.removeProperty('transition');
+
+                    }, currentHeight > 0 ? 500 : 0); // Delay fade-in slightly after height changes
+                }
+            }
+
+            tabs.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.getAttribute('data-tab');
+                    switchTab(tabId);
+                });
+            });
+
+            // Handle initial load based on URL hash (e.g., #terms) or default
+            const initialHash = window.location.hash.substring(1);
+            if (initialHash && document.getElementById(initialHash)) {
+                switchTab(initialHash);
+            } else {
+                switchTab('privacy'); // Default to 'privacy'
+            }
+             // Ensure initial height is set correctly after first content loads
+             setTimeout(() => {
+                const activeSection = document.querySelector('.content-section.active');
+                if (activeSection) {
+                    container.style.height = `${activeSection.offsetHeight + 290}px`;
+                    container.style.removeProperty('transition');
+                }
+             }, 100); // Small delay to allow initial rendering
+        });
+    </script>
+
+</body>
+</html>

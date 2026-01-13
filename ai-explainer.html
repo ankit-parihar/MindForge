@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Explainer - AI-Powered Knowledge</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 48px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+
+        .api-selector {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .api-option {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: #fafafa;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .api-option:hover {
+            border-color: #667eea;
+            background: #f0f3ff;
+        }
+
+        .api-option.active {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-container {
+            margin-top: 32px;
+            padding: 24px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 12px;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-container.show {
+            display: block;
+        }
+
+        .result-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .result-content {
+            color: #444;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .result-content p {
+            margin-bottom: 16px;
+        }
+
+        .result-content strong {
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .source-link {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .source-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .source-link a:hover {
+            text-decoration: underline;
+        }
+
+        .loader {
+            display: none;
+            margin: 20px auto;
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader.show {
+            display: block;
+        }
+
+        .error {
+            color: #e74c3c;
+            padding: 16px;
+            background: #fef0f0;
+            border-radius: 8px;
+            margin-top: 16px;
+            display: none;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 32px 24px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .api-selector {
+                flex-direction: column;
+            }
+
+            .api-option {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <h1>Smart Explainer</h1>
+        <p class="subtitle">Get instant explanations using free public knowledge bases</p>
+
+        <div class="input-group">
+            <label for="question">What would you like to learn about?</label>
+            <input 
+                type="text" 
+                id="question" 
+                placeholder="e.g., quantum physics, photosynthesis, machine learning..."
+                autocomplete="off"
+            />
+        </div>
+
+        <div class="api-selector">
+            <div class="api-option active" data-api="wikipedia">
+                📚 Wikipedia
+            </div>
+            <div class="api-option" data-api="dictionary">
+                📖 Dictionary
+            </div>
+            <div class="api-option" data-api="combined">
+                🔍 Combined
+            </div>
+        </div>
+
+        <button onclick="getExplanation()">Get Explanation</button>
+
+        <div class="loader" id="loader"></div>
+        <div class="error" id="error"></div>
+
+        <div class="result-container" id="resultContainer">
+            <div class="result-title" id="resultTitle"></div>
+            <div class="result-content" id="resultContent"></div>
+            <div class="source-link" id="sourceLink"></div>
+        </div>
+    </div>
+
+    <script>
+        let selectedAPI = 'wikipedia';
+
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 10 + 5 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // API selector
+        document.querySelectorAll('.api-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.api-option').forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                selectedAPI = this.dataset.api;
+            });
+        });
+
+        // Enter key handler
+        document.getElementById('question').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                getExplanation();
+            }
+        });
+
+        async function getExplanation() {
+            const question = document.getElementById('question').value.trim();
+            const loader = document.getElementById('loader');
+            const resultContainer = document.getElementById('resultContainer');
+            const error = document.getElementById('error');
+            const button = document.querySelector('button');
+
+            if (!question) {
+                showError('Please enter a question or topic.');
+                return;
+            }
+
+            // Reset UI
+            error.classList.remove('show');
+            resultContainer.classList.remove('show');
+            loader.classList.add('show');
+            button.disabled = true;
+            button.textContent = 'Loading...';
+
+            try {
+                let result;
+                
+                if (selectedAPI === 'wikipedia') {
+                    result = await fetchWikipedia(question);
+                } else if (selectedAPI === 'dictionary') {
+                    result = await fetchDictionary(question);
+                } else {
+                    result = await fetchCombined(question);
+                }
+
+                displayResult(result);
+            } catch (err) {
+                showError(err.message || 'Failed to fetch explanation. Please try again.');
+            } finally {
+                loader.classList.remove('show');
+                button.disabled = false;
+                button.textContent = 'Get Explanation';
+            }
+        }
+
+        async function fetchWikipedia(topic) {
+            const response = await fetch(
+                `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(topic)}`
+            );
+
+            if (!response.ok) {
+                throw new Error('Topic not found on Wikipedia. Try a different search term.');
+            }
+
+            const data = await response.json();
+
+            return {
+                title: data.title,
+                content: data.extract,
+                source: data.content_urls?.desktop?.page || '',
+                type: 'wikipedia'
+            };
+        }
+
+        async function fetchDictionary(word) {
+            const response = await fetch(
+                `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(word)}`
+            );
+
+            if (!response.ok) {
+                throw new Error('Word not found in dictionary. Try Wikipedia instead.');
+            }
+
+            const data = await response.json();
+            const entry = data[0];
+
+            let content = `<p><strong>Word:</strong> ${entry.word}</p>`;
+            
+            if (entry.phonetic) {
+                content += `<p><strong>Pronunciation:</strong> ${entry.phonetic}</p>`;
+            }
+
+            entry.meanings.forEach((meaning, idx) => {
+                content += `<p><strong>${meaning.partOfSpeech}</strong></p>`;
+                meaning.definitions.slice(0, 3).forEach((def, defIdx) => {
+                    content += `<p>${defIdx + 1}. ${def.definition}</p>`;
+                    if (def.example) {
+                        content += `<p><em>Example: "${def.example}"</em></p>`;
+                    }
+                });
+            });
+
+            return {
+                title: entry.word,
+                content: content,
+                source: '',
+                type: 'dictionary'
+            };
+        }
+
+        async function fetchCombined(query) {
+            try {
+                const wikiResult = await fetchWikipedia(query);
+                return wikiResult;
+            } catch (err) {
+                try {
+                    const dictResult = await fetchDictionary(query);
+                    return dictResult;
+                } catch (err2) {
+                    throw new Error('Could not find information. Try rephrasing your query.');
+                }
+            }
+        }
+
+        function displayResult(result) {
+            const resultContainer = document.getElementById('resultContainer');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultContent = document.getElementById('resultContent');
+            const sourceLink = document.getElementById('sourceLink');
+
+            resultTitle.textContent = result.title;
+            resultContent.innerHTML = result.content;
+
+            if (result.source) {
+                sourceLink.innerHTML = `<strong>Source:</strong> <a href="${result.source}" target="_blank" rel="noopener">Read more on Wikipedia</a>`;
+            } else {
+                sourceLink.innerHTML = '';
+            }
+
+            resultContainer.classList.add('show');
+            resultContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function showError(message) {
+            const error = document.getElementById('error');
+            error.textContent = message;
+            error.classList.add('show');
+        }
+    </script>
+</body>
+</html>
