@@ -22,7 +22,7 @@ A web-based exam preparation platform built using HTML, CSS, and JavaScript, off
 
 The main goal of this project is to help students prepare for competitive and academic exams through practice quizzes and clear performance insights, enabling targeted improvement.
 
-**Possible Improvements**
+**🔮Possible Improvements**
 
 Advanced analytics dashboards and visual reports
 
