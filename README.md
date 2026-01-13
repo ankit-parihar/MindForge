@@ -22,13 +22,17 @@ A web-based exam preparation platform built using HTML, CSS, and JavaScript, off
 
 The main goal of this project is to help students prepare for competitive and academic exams through practice quizzes and clear performance insights, enabling targeted improvement.
 
-## 🔮 Future Enhancements
+**Possible Improvements**
 
-* User authentication and profiles
-* Question categories and difficulty levels
-* Timer-based exams
-* Progress tracking with charts
-* Admin panel for adding questions
+Advanced analytics dashboards and visual reports
+
+Cloud-based data storage and synchronization
+
+AI-based question recommendations
+
+Mobile app version
+
+Offline practice support
 
 ## 📌 Use Case
 
